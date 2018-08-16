@@ -1,20 +1,38 @@
 package com.nxuanthuong.androidmultiimagepicker;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nxuanthuong.androidmultiimagepicker.adapters.GalleryItemAdapter;
+import com.nxuanthuong.androidmultiimagepicker.models.Picture;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerViewGallery;
+    private ArrayList<Picture> pictures;
+    GalleryItemAdapter adapter;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -26,6 +44,36 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        pictures=new ArrayList<>();
+        recyclerViewGallery = findViewById(R.id.recyclerViewGallery);
+        recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 3));
+        adapter = new GalleryItemAdapter(this, pictures);
+        recyclerViewGallery.setAdapter(adapter);
+
+        handler = new Handler();
+        new Thread() {
+
+            @Override
+            public void run() {
+                Looper.prepare();
+                handler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        pictures.clear();
+                        pictures.addAll(Picture.getGalleryPhotos(MainActivity.this));
+                        adapter.notifyDataSetChanged();
+                        //imageListRecyclerAdapter.addAll(getGalleryPhotos());
+                        //checkImageStatus();
+                    }
+                });
+                Looper.loop();
+            }
+
+
+        }.start();
+
     }
 
     @Override
