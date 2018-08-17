@@ -12,6 +12,8 @@ import java.util.Collections;
 public class Picture {
     private String path;
     private int selectCount;
+    //để biets vị trí nào trong adapter để refresh đúng index đó
+    private int position;
 
     public Picture() {
     }
@@ -34,6 +36,21 @@ public class Picture {
 
     public void setSelectCount(int selectCount) {
         this.selectCount = selectCount;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        //return super.equals(obj);
+        return this.getSelectCount()==((Picture)obj).getSelectCount();
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public static ArrayList<Picture> getGalleryPhotos(Context context) {
