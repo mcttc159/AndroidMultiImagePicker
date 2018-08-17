@@ -19,7 +19,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.nxuanthuong.androidmultiimagepicker.R;
 import com.nxuanthuong.androidmultiimagepicker.models.Picture;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,5 +139,21 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
         }
 
 
+    }
+
+    //get all picture selected
+    public ArrayList<Picture> getAllPictureSelected(){
+
+
+        Collections.sort(picturesSelected, new Comparator<Picture>() {
+            @Override
+            public int compare(Picture o1, Picture o2) {
+                return o1.getSelectCount()>=o2.getSelectCount()?1:-1;
+            }
+        });
+
+
+
+        return (ArrayList<Picture>) picturesSelected;
     }
 }

@@ -39,7 +39,7 @@ public class ImageSelectedAdapter extends RecyclerView.Adapter<ImageSelectedAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return pictures.size();
     }
 
     public class ImageItemViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +51,7 @@ public class ImageSelectedAdapter extends RecyclerView.Adapter<ImageSelectedAdap
         }
 
         public void bind(Picture picture) {
-            RequestOptions options = new RequestOptions().skipMemoryCache(true).override(200, 200).placeholder(R.drawable.ic_launcher_background);
+            RequestOptions options = new RequestOptions().skipMemoryCache(true).override(200).placeholder(R.drawable.ic_launcher_background);
 //                    .centerCrop()
 //                    .placeholder(R.drawable.ic_camera)
 //                    .error(R.drawable.ic_send)
