@@ -28,7 +28,7 @@ public class ListImageSelectedActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewImageSelected.setLayoutManager(layoutManager);
 
-         adapter=new ImageSelectedAdapter(this,picturesSelected);
+        adapter=new ImageSelectedAdapter(this,picturesSelected);
         recyclerViewImageSelected.setAdapter(adapter);
 
         Log.d("soluonghinh",picturesSelected.size()+"");
